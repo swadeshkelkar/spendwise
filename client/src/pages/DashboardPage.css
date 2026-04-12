@@ -1,0 +1,15 @@
+.dashboard-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+}
+.dashboard-greeting { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+
+.dashboard-bottom {
+  display: grid; grid-template-columns: 1fr 340px; gap: 24px;
+}
+.dashboard-main { min-width: 0; }
+.dashboard-side  { display: flex; flex-direction: column; }
+
+@media (max-width: 1100px) {
+  .dashboard-bottom { grid-template-columns: 1fr; }
+}

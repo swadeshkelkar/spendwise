@@ -1,0 +1,10 @@
+.budget-list { display: flex; flex-direction: column; gap: 14px; }
+.budget-item { display: flex; flex-direction: column; gap: 6px; }
+.budget-top  { display: flex; justify-content: space-between; align-items: center; }
+.budget-bar-track {
+  height: 6px; background: var(--bg-tertiary); border-radius: 3px; overflow: hidden;
+}
+.budget-bar-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 0.6s ease;
+}
