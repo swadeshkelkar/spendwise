@@ -2,8 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import VerifyEmailPage from './pages/VerifyEmailPage';
 import DashboardPage from './pages/DashboardPage';
 import ExpensesPage from './pages/ExpensesPage';
 import AnalyticsPage from './pages/AnalyticsPage';
@@ -41,8 +39,6 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<LandingRoute />} />
       <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
-      <Route path="/register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
-      <Route path="/verify-email" element={<VerifyEmailPage />} />
 
       <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route path="dashboard" element={<DashboardPage />} />

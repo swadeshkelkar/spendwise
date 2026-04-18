@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
@@ -24,8 +24,20 @@ export default function ExpensesPage() {
 
   const [filters, setFilters]   = useState({ period: 'month', category_id: '', start_date: '', end_date: '' });
   const [page, setPage]         = useState(1);
-  const [showAdd, setShowAdd]   = useState(false);
-  const [exporting, setExporting] = useState(false);
+  const [showAdd, setShowAdd]       = useState(false);
+  const [exporting, setExporting]   = useState(false);
+  const [showExport, setShowExport] = useState(false);
+  const exportRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (exportRef.current && !exportRef.current.contains(e.target)) {
+        setShowExport(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   const { data, isLoading } = useQuery({
     queryKey: ['expenses', filters, page],
@@ -60,13 +72,13 @@ export default function ExpensesPage() {
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {/* Export Dropdown */}
-          <div className="dropdown">
-            <button className="btn btn-secondary" disabled={exporting}>
+          <div className="dropdown" ref={exportRef}>
+            <button className="btn btn-secondary" disabled={exporting} onClick={() => setShowExport(v => !v)}>
               {exporting ? <span className="spinner" /> : '📤'} Export
             </button>
-            <div className="dropdown-menu">
-              <button className="dropdown-item" onClick={() => handleExport('csv')}>📄 Export CSV</button>
-              <button className="dropdown-item" onClick={() => handleExport('excel')}>📊 Export Excel</button>
+            <div className={`dropdown-menu${showExport ? ' open' : ''}`}>
+              <button className="dropdown-item" onClick={() => { handleExport('csv');   setShowExport(false); }}>📄 Export CSV</button>
+              <button className="dropdown-item" onClick={() => { handleExport('excel'); setShowExport(false); }}>📊 Export Excel</button>
             </div>
           </div>
           <button id="add-expense-fab" className="btn btn-primary" onClick={() => setShowAdd(true)}>

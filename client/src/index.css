@@ -186,6 +186,14 @@ h4 { font-size: 1rem;  font-weight: 600; }
   box-shadow: var(--shadow-lg);
   animation: slideUp 0.2s ease;
 }
+@media (max-width: 480px) {
+  .modal {
+    border-radius: var(--radius-lg);
+    padding: 20px 16px;
+    max-height: 95vh;
+  }
+  .modal-overlay { padding: 8px; align-items: flex-end; }
+}
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
 .modal-title { font-size: 1.2rem; font-weight: 700; }
 .modal-close {
@@ -279,7 +287,7 @@ h4 { font-size: 1rem;  font-weight: 600; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 768px)  { .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px)  { .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px)  { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
 
 /* ── Tooltip ────────────────────────────────────────────────────────────────── */
@@ -339,12 +347,14 @@ input[type="range"]::-webkit-slider-thumb {
   position: relative; display: inline-block;
 }
 .dropdown-menu {
+  display: none;
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 50;
   background: var(--bg-secondary); border: 1px solid var(--border);
   border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
   min-width: 160px; overflow: hidden;
   animation: slideDown 0.15s ease;
 }
+.dropdown-menu.open { display: block; }
 .dropdown-item {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 16px; font-size: 14px; cursor: pointer;

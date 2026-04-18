@@ -41,9 +41,15 @@
 }
 .cat-item:hover { border-color: var(--border); }
 .cat-left  { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-.cat-name  { font-size: 14px; font-weight: 500; }
+.cat-name  { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .settings-grid { grid-template-columns: 1fr; }
   .settings-full { grid-column: 1; }
+}
+
+@media (max-width: 600px) {
+  .add-cat-form { flex-direction: column; }
+  .add-cat-form .btn { width: 100%; justify-content: center; }
 }

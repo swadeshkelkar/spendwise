@@ -12,7 +12,7 @@ export default function AddExpenseModal({ onClose, onSuccess }) {
 
   const [form, setForm] = useState({
     description: '', amount: '', date: today,
-    category_id: '', notes: '', is_recurring: false, recur_period: 'monthly',
+    category_id: '', notes: '',
   });
 
   const { data: categories } = useQuery({
@@ -106,23 +106,7 @@ export default function AddExpenseModal({ onClose, onSuccess }) {
             />
           </div>
 
-          <label className="recurring-toggle">
-            <input type="checkbox" checked={form.is_recurring} onChange={e => set('is_recurring', e.target.checked)} />
-            <span className="toggle-track"><span className="toggle-thumb" /></span>
-            <span>Recurring expense</span>
-          </label>
 
-          {form.is_recurring && (
-            <div className="form-group">
-              <label className="form-label">Recurrence</label>
-              <select id="exp-recur" className="form-select" value={form.recur_period} onChange={e => set('recur_period', e.target.value)}>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
-            </div>
-          )}
 
           <div className="expense-form-actions">
             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>

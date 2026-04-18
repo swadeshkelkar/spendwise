@@ -7,7 +7,7 @@ const features = [
   { icon: '📤', title: 'Export Anywhere', desc: 'Export your expenses as CSV or Excel with powerful filters applied.' },
   { icon: '💱', title: 'Multi-Currency', desc: '20+ currencies supported. Default is INR. Switch anytime from settings.' },
   { icon: '🔔', title: 'Budget Alerts', desc: 'Set per-category budgets and get warned when you\'re close to the limit.' },
-  { icon: '🔒', title: 'Secure & Private', desc: 'Email verified accounts, JWT auth, and Google Sign-In — your data stays yours.' },
+  { icon: '🔒', title: 'Secure & Private', desc: 'Google Sign-In only — your data stays yours, no passwords stored.' },
 ];
 
 export default function LandingPage() {
@@ -20,8 +20,7 @@ export default function LandingPage() {
           <span>SpendWise</span>
         </div>
         <div className="landing-nav-actions">
-          <Link to="/login" className="btn btn-ghost btn-sm">Sign In</Link>
-          <Link to="/register" className="btn btn-primary btn-sm">Get Started</Link>
+          <Link to="/login" className="btn btn-primary btn-sm">Get Started</Link>
         </div>
       </nav>
 
@@ -36,14 +35,10 @@ export default function LandingPage() {
           Track every rupee, visualize spending patterns, set budgets, and export reports — all in one beautiful app.
         </p>
         <div className="hero-actions">
-          <Link to="/register" className="btn btn-primary btn-lg">
+          <Link to="/login" className="btn btn-primary btn-lg">
             🚀 Start Tracking Free
           </Link>
-          <Link to="/login" className="btn btn-secondary btn-lg">
-            Sign In
-          </Link>
         </div>
-        {/* <p className="hero-note">No credit card required · Free forever</p> */}
       </section>
 
       {/* ── Features ── */}
@@ -66,8 +61,8 @@ export default function LandingPage() {
         <div className="cta-card">
           <h2>Ready to take control?</h2>
           <p>Join thousands managing their expenses smarter with SpendWise.</p>
-          <Link to="/register" className="btn btn-primary btn-lg">
-            Create Your Free Account →
+          <Link to="/login" className="btn btn-primary btn-lg">
+            Sign In with Google →
           </Link>
         </div>
       </section>

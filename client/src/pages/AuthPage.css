@@ -21,15 +21,3 @@
 
 .auth-title { text-align: center; font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
 .auth-sub   { text-align: center; color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; }
-
-.auth-form {
-  display: flex; flex-direction: column; gap: 16px;
-  margin-bottom: 20px;
-}
-
-.auth-footer {
-  text-align: center; font-size: 14px; color: var(--text-secondary);
-  margin-top: 20px;
-}
-.auth-footer a { color: var(--primary); font-weight: 600; }
-.auth-footer a:hover { color: var(--primary-light); }

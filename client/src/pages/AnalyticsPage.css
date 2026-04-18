@@ -4,7 +4,7 @@
 }
 @media (max-width: 900px) { .analytics-charts { grid-template-columns: 1fr; } }
 
-/* ── Breakdown table ──────────────────────────────────────── */
+/* ── Breakdown table ──────────────────────────────────── */
 .breakdown-table { display: flex; flex-direction: column; gap: 16px; }
 .breakdown-row   {
   display: grid; grid-template-columns: 1fr auto;
@@ -24,3 +24,9 @@
   background: var(--bg-tertiary); border-radius: 2px; overflow: hidden;
 }
 .breakdown-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+@media (max-width: 600px) {
+  .breakdown-icon { font-size: 1.2rem; }
+  .breakdown-name { font-size: 13px; }
+  .breakdown-amount { font-size: 14px; }
+}

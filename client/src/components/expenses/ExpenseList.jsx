@@ -76,10 +76,7 @@ function ExpenseRow({ expense: e, currency, onDelete, loading }) {
         {e.category_icon}
       </div>
       <div className="exp-info">
-        <div className="exp-desc">
-          {e.description}
-          {e.is_recurring ? <span className="recurring-badge">🔄</span> : null}
-        </div>
+        <div className="exp-desc">{e.description}</div>
         <div className="exp-meta">
           <span className="exp-cat-badge" style={{ background: `${e.category_color}22`, color: e.category_color }}>
             {e.category_name}

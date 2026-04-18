@@ -30,13 +30,9 @@ function initializeDB() {
       id               INTEGER PRIMARY KEY AUTOINCREMENT,
       name             TEXT NOT NULL,
       email            TEXT UNIQUE NOT NULL,
-      password         TEXT,
       google_id        TEXT UNIQUE,
       avatar_url       TEXT,
       currency         TEXT DEFAULT 'INR',
-      email_verified   INTEGER DEFAULT 0,
-      verify_token     TEXT,
-      verify_token_exp DATETIME,
       created_at       DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -58,8 +54,6 @@ function initializeDB() {
       amount      REAL NOT NULL,
       date        TEXT NOT NULL,
       notes       TEXT,
-      is_recurring INTEGER DEFAULT 0,
-      recur_period TEXT,
       created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
       FOREIGN KEY (category_id) REFERENCES categories(id)

@@ -102,7 +102,7 @@ router.get('/summary', (req, res) => {
 
 // ── POST /api/expenses ────────────────────────────────────────────────────────
 router.post('/', (req, res) => {
-  const { description, amount, date, category_id, notes, is_recurring, recur_period } = req.body;
+  const { description, amount, date, category_id, notes } = req.body;
 
   if (!description?.trim()) return res.status(400).json({ error: 'Description is required' });
   if (!amount || isNaN(amount) || Number(amount) <= 0) return res.status(400).json({ error: 'Valid amount is required' });
@@ -114,9 +114,9 @@ router.post('/', (req, res) => {
   if (!cat) return res.status(400).json({ error: 'Invalid category' });
 
   const result = db.prepare(`
-    INSERT INTO expenses (user_id, category_id, description, amount, date, notes, is_recurring, recur_period)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(req.user.id, category_id, description.trim(), Number(amount), date, notes || null, is_recurring ? 1 : 0, recur_period || null);
+    INSERT INTO expenses (user_id, category_id, description, amount, date, notes)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run(req.user.id, category_id, description.trim(), Number(amount), date, notes || null);
 
   const expense = db.prepare(`
     SELECT e.*, c.name as category_name, c.icon as category_icon, c.color as category_color
@@ -142,7 +142,7 @@ router.get('/export', async (req, res) => {
   const format = req.query.format || 'csv';
 
   const expenses = db.prepare(`
-    SELECT e.date, e.description, c.name as category, e.amount, e.notes, e.is_recurring, e.recur_period, e.created_at
+    SELECT e.date, e.description, c.name as category, e.amount, e.notes, e.created_at
     FROM expenses e
     JOIN categories c ON c.id = e.category_id
     WHERE ${where}
@@ -152,9 +152,9 @@ router.get('/export', async (req, res) => {
   const currency = req.user.currency || 'INR';
 
   if (format === 'csv') {
-    const header = 'Date,Description,Category,Amount,Currency,Notes,Recurring,Period,Added On\n';
+    const header = 'Date,Description,Category,Amount,Currency,Notes,Added On\n';
     const rows = expenses.map(e =>
-      [e.date, `"${e.description}"`, e.category, e.amount, currency, `"${e.notes || ''}"`, e.is_recurring ? 'Yes' : 'No', e.recur_period || '', e.created_at].join(',')
+      [e.date, `"${e.description}"`, e.category, e.amount, currency, `"${e.notes || ''}"`, e.created_at].join(',')
     ).join('\n');
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename="spendwise_expenses.csv"');
@@ -172,14 +172,13 @@ router.get('/export', async (req, res) => {
       { header: 'Category',    key: 'category',    width: 16 },
       { header: `Amount (${currency})`, key: 'amount', width: 16 },
       { header: 'Notes',       key: 'notes',       width: 30 },
-      { header: 'Recurring',   key: 'recurring',   width: 12 },
     ];
 
     ws.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
     ws.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF6C63FF' } };
 
     expenses.forEach(e => {
-      ws.addRow({ date: e.date, description: e.description, category: e.category, amount: e.amount, notes: e.notes || '', recurring: e.is_recurring ? 'Yes' : 'No' });
+      ws.addRow({ date: e.date, description: e.description, category: e.category, amount: e.amount, notes: e.notes || '' });
     });
 
     // Total row

@@ -2,7 +2,15 @@
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
 }
+
 .pagination {
   display: flex; align-items: center; justify-content: center; gap: 16px;
   padding-top: 20px; border-top: 1px solid var(--border-light); margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .expenses-header { flex-direction: column; align-items: stretch; }
+  .expenses-header > div:last-child { display: flex; gap: 8px; }
+  .expenses-header > div:last-child .btn { flex: 1; justify-content: center; }
+  .pagination { gap: 10px; }
 }

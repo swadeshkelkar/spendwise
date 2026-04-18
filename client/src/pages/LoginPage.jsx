@@ -1,47 +1,11 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import toast from 'react-hot-toast';
+import { useSearchParams } from 'react-router-dom';
 import './AuthPage.css';
 
 export default function LoginPage() {
-  const [form, setForm]       = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
-  const [unverified, setUnverified] = useState(null);
-  const { login }   = useAuth();
-  const navigate    = useNavigate();
+  const [params] = useSearchParams();
+  const error = params.get('error');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setUnverified(null);
-    try {
-      await login(form.email, form.password);
-      toast.success('Welcome back!');
-      navigate('/dashboard');
-    } catch (err) {
-      const data = err.response?.data;
-      if (data?.code === 'EMAIL_NOT_VERIFIED') {
-        setUnverified(data.email);
-      } else {
-        toast.error(data?.error || 'Login failed');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResend = async () => {
-    try {
-      const res = await fetch('/api/auth/resend-verification', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: unverified }),
-      });
-      const data = await res.json();
-      if (res.ok) toast.success(data.message);
-      else toast.error(data.error);
-    } catch { toast.error('Failed to resend'); }
-  };
+  const googleAuthUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/auth/google`;
 
   return (
     <div className="auth-page landing-hero-bg">
@@ -51,45 +15,28 @@ export default function LoginPage() {
           <span style={{ fontSize: '1.3rem', fontWeight: 800 }}>SpendWise</span>
         </div>
         <h2 className="auth-title">Welcome back</h2>
-        <p className="auth-sub">Sign in to your account</p>
+        <p className="auth-sub">Sign in to continue tracking your expenses</p>
 
-        {unverified && (
-          <div className="banner banner-warning" style={{ marginBottom: 16 }}>
+        {error && (
+          <div className="banner banner-danger" style={{ marginBottom: 20 }}>
             <span>⚠️</span>
-            <div>
-              Please verify your email.&nbsp;
-              <button onClick={handleResend} style={{ textDecoration: 'underline', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>
-                Resend email
-              </button>
-            </div>
+            <span>Google sign-in failed. Please try again.</span>
           </div>
         )}
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Email</label>
-            <input id="login-email" type="email" className="form-input" placeholder="you@example.com" required
-              value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <input id="login-password" type="password" className="form-input" placeholder="••••••••" required
-              value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} />
-          </div>
-          <button id="login-submit" type="submit" className="btn btn-primary btn-full" disabled={loading}>
-            {loading ? <span className="spinner" /> : '🔓 Sign In'}
-          </button>
-        </form>
-
-        <div className="divider">or</div>
-
-        <a href="http://localhost:3001/api/auth/google" className="btn btn-secondary btn-full" id="google-login">
-          <img src="https://www.google.com/favicon.ico" width={16} height={16} alt="" />
+        <a
+          href={googleAuthUrl}
+          className="btn btn-secondary btn-full"
+          id="google-login"
+          style={{ justifyContent: 'center', gap: 12, padding: '14px 20px', fontSize: 15 }}
+        >
+          <img src="https://www.google.com/favicon.ico" width={18} height={18} alt="" />
           Continue with Google
         </a>
 
-        <p className="auth-footer">
-          Don't have an account? <Link to="/register">Create one</Link>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginTop: 24, lineHeight: 1.6 }}>
+          By signing in, you agree to our terms of service.<br />
+          Your Google account info is only used to identify you.
         </p>
       </div>
     </div>
