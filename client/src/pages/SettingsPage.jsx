@@ -9,7 +9,7 @@ import './SettingsPage.css';
 export default function SettingsPage() {
   const { user, updateCurrency, logout } = useAuth();
   const qc = useQueryClient();
-  const [newCat, setNewCat]   = useState({ name: '', icon: '📦', color: '#6C63FF' });
+  const [newCat, setNewCat] = useState({ name: '', icon: '📦', color: '#6C63FF' });
   const [catError, setCatError] = useState('');
 
   const { data: categories, isLoading: catsLoading } = useQuery({
@@ -45,8 +45,8 @@ export default function SettingsPage() {
     addCatMut.mutate(newCat);
   };
 
-  const PRESET_ICONS = ['🍔','✈️','📄','📈','💳','🍻','🛒','🏥','🎮','📚','🏠','🚗','💪','🎵','💡','🐾'];
-  const PRESET_COLORS = ['#6C63FF','#3B82F6','#10B981','#F59E0B','#EF4444','#EC4899','#8B5CF6','#06B6D4'];
+  const PRESET_ICONS = ['🍔', '✈️', '📄', '📈', '💳', '🍻', '🛒', '🏥', '🎮', '📚', '🏠', '🚗', '💪', '🎵', '💡', '🐾'];
+  const PRESET_COLORS = ['#6C63FF', '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#8B5CF6', '#06B6D4'];
 
   return (
     <div className="settings-page page-fade">
@@ -182,7 +182,7 @@ export default function SettingsPage() {
           <h3 className="settings-section-title" style={{ color: 'var(--danger)' }}>⚠️ Account</h3>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <div>
-              <div style={{ fontWeight: 600 }}>Sign out</div>
+              <div style={{ fontWeight: 600 }}>Sign Out</div>
               <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Sign out from all sessions</div>
             </div>
             <button
@@ -190,6 +190,26 @@ export default function SettingsPage() {
               onClick={async () => { await logout(); window.location.href = '/login'; }}
             >
               🚪 Sign Out
+            </button>
+          </div>
+          <div style={{ height: '1px', background: 'var(--border)', margin: '16px 0' }} />
+          {/* // button for deleting account completely */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <div style={{ fontWeight: 600 }}>Delete Account</div>
+              <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Delete your account completely</div>
+            </div>
+            <button
+              className="btn btn-danger"
+              onClick={async () => {
+                if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
+                await api.delete('/auth/account');
+                toast.success('Account deleted successfully');
+                logout();
+                window.location.href = '/login';
+              }}
+            >
+              ❌ Delete Account
             </button>
           </div>
         </div>

@@ -1,20 +1,18 @@
 import { NavLink } from 'react-router-dom';
 
 const navItems = [
-  { to: '/dashboard',  icon: '🏠', label: 'Dashboard'  },
-  { to: '/expenses',   icon: '💸', label: 'Expenses'   },
-  { to: '/analytics',  icon: '📊', label: 'Analytics'  },
-  { to: '/settings',   icon: '⚙️', label: 'Settings'   },
+  { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
+  { to: '/expenses', icon: '💸', label: 'Expenses' },
+  { to: '/analytics', icon: '📊', label: 'Analytics' },
+  { to: '/settings', icon: '⚙️', label: 'Settings' },
 ];
 
-export default function Sidebar({ open, onClose }) {
+export default function Sidebar() {
   return (
-    <aside className={`sidebar${open ? ' open' : ''}`}>
+    <aside className="sidebar">
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon">💰</div>
         <span>SpendWise</span>
-        {/* Mobile close button */}
-        <button className="sidebar-close-btn" onClick={onClose} aria-label="Close menu">✕</button>
       </div>
 
       <nav className="sidebar-nav">
@@ -24,7 +22,6 @@ export default function Sidebar({ open, onClose }) {
             key={item.to}
             to={item.to}
             className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-            onClick={onClose}
           >
             <span className="nav-item-icon">{item.icon}</span>
             <span className="nav-item-label">{item.label}</span>

@@ -6,16 +6,16 @@ import { getCurrencySymbol } from '../../utils/currency';
 
 const PAGE_TITLES = {
   '/dashboard': 'Dashboard',
-  '/expenses':  'Expenses',
+  '/expenses': 'Expenses',
   '/analytics': 'Analytics',
-  '/settings':  'Settings',
+  '/settings': 'Settings',
 };
 
-export default function Topbar({ onMenuClick }) {
+export default function Topbar() {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const navigate  = useNavigate();
-  const title     = PAGE_TITLES[location.pathname] || 'SpendWise';
+  const navigate = useNavigate();
+  const title = PAGE_TITLES[location.pathname] || 'SpendWise';
 
   const [showProfile, setShowProfile] = useState(false);
   const profileRef = useRef(null);
@@ -40,26 +40,15 @@ export default function Topbar({ onMenuClick }) {
 
   return (
     <header className="topbar">
-      {/* Hamburger — mobile only */}
-      <button className="topbar-hamburger" onClick={onMenuClick} aria-label="Open menu">
-        <span /><span /><span />
-      </button>
-
       <h1 className="topbar-title">{title}</h1>
-
       <div className="topbar-right">
         {user?.currency && (
-          <span className="topbar-currency">
+          <span style={{ fontSize: 13, color: 'var(--text-secondary)', background: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: 99, border: '1px solid var(--border)' }}>
             {getCurrencySymbol(user.currency)} {user.currency}
           </span>
         )}
         <div style={{ position: 'relative' }} className="dropdown" ref={profileRef}>
-          <div
-            className="topbar-avatar"
-            title={user?.name}
-            onClick={() => setShowProfile(v => !v)}
-            style={{ cursor: 'pointer' }}
-          >
+          <div className="topbar-avatar" title={user?.name} onClick={() => setShowProfile(v => !v)} style={{ cursor: 'pointer' }}>
             {user?.avatar_url
               ? <img src={user.avatar_url} alt={user.name} />
               : initials

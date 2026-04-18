@@ -60,4 +60,20 @@ router.post('/logout', (_req, res) => {
   res.json({ message: 'Logged out' });
 });
 
+// delete account
+router.delete('/account', (req, res) => {
+  try {
+    const token = req.cookies?.token;
+    if (!token) return res.status(401).json({ error: 'Not authenticated' });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const db = getDB();
+    db.prepare('DELETE FROM users WHERE id = ?').run(decoded.userId);
+    res.clearCookie('token');
+    return res.json({ message: 'Account deleted' });
+  } catch {
+    return res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
+
 module.exports = router;

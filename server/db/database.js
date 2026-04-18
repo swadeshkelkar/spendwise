@@ -14,12 +14,12 @@ function getDB() {
 }
 
 const DEFAULT_CATEGORIES = [
-  { name: 'Food',       icon: '🍔', color: '#F59E0B' },
-  { name: 'Travel',     icon: '✈️',  color: '#3B82F6' },
-  { name: 'Bills',      icon: '📄', color: '#EF4444' },
+  { name: 'Food', icon: '🍽️', color: '#F59E0B' },
+  { name: 'Travel', icon: '🚌', color: '#3B82F6' },
+  { name: 'Bills', icon: '📄', color: '#EF4444' },
   { name: 'Investment', icon: '📈', color: '#10B981' },
-  { name: 'Debt',       icon: '💳', color: '#8B5CF6' },
-  { name: 'Drinks',     icon: '🍻', color: '#EC4899' },
+  { name: 'Groceries', icon: '🛒', color: '#8B5CF6' },
+  { name: 'Drinks', icon: '☕', color: '#EC4899' },
 ];
 
 function initializeDB() {
@@ -86,6 +86,12 @@ function seedDefaultCategories(userId) {
     for (const cat of cats) insert.run(userId, cat.name, cat.icon, cat.color);
   });
   insertMany(DEFAULT_CATEGORIES);
+}
+
+// delete a user completely
+function deleteUser(userId) {
+  const db = getDB();
+  db.prepare('DELETE FROM users WHERE id = ?').run(userId);
 }
 
 module.exports = { getDB, initializeDB, seedDefaultCategories };
