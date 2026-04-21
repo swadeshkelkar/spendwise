@@ -1,3 +1,4 @@
+/* ── Header ───────────────────────────────────────────────── */
 .expenses-header {
   display: flex;
   align-items: center;
@@ -6,13 +7,150 @@
   flex-wrap: wrap;
   gap: 12px;
 }
+.expenses-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.expenses-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
+/* ── Card ─────────────────────────────────────────────────── */
+.expenses-card { margin-top: 20px; }
+
+/* ── Toolbar (per-page + fetch indicator) ─────────────────── */
+.expenses-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+  gap: 10px;
+}
+.per-page-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.per-page-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.per-page-btn {
+  min-width: 36px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.per-page-btn:hover   { border-color: var(--primary); color: var(--text-primary); }
+.per-page-btn.active  {
+  background: rgba(108, 99, 255, 0.15);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+.fetch-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Pagination ───────────────────────────────────────────── */
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 6px;
   padding-top: 20px;
   border-top: 1px solid var(--border-light);
   margin-top: 20px;
+  flex-wrap: wrap;
+}
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.page-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-btn:hover:not(:disabled):not(.active) {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+.page-btn.active {
+  background: var(--grad-primary);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(108, 99, 255, 0.4);
+  cursor: default;
+}
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.page-nav {
+  font-size: 20px;
+  font-weight: 400;
+  min-width: 36px;
+}
+.page-dots {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+}
+.pagination-info {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .expenses-header  { flex-direction: column; align-items: stretch; }
+  .expenses-actions { flex-wrap: wrap; }
+  .expenses-actions .btn { flex: 1; justify-content: center; }
+  .per-page-label   { display: none; }
+  .page-btn         { min-width: 32px; height: 32px; font-size: 13px; }
+  .page-nav         { font-size: 18px; }
+}
+
+@media (max-width: 400px) {
+  .page-numbers .page-btn:not(.active):not(:first-child):not(:last-child) {
+    display: none;
+  }
 }

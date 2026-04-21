@@ -11,7 +11,7 @@ const PAGE_TITLES = {
   '/settings': 'Settings',
 };
 
-export default function Topbar() {
+export default function Topbar({ onMenuClick }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,10 +40,20 @@ export default function Topbar() {
 
   return (
     <header className="topbar">
+      {/* Hamburger — only visible on mobile */}
+      <button
+        className="topbar-hamburger"
+        onClick={onMenuClick}
+        aria-label="Toggle menu"
+      >
+        <span /><span /><span />
+      </button>
+
       <h1 className="topbar-title">{title}</h1>
+
       <div className="topbar-right">
         {user?.currency && (
-          <span style={{ fontSize: 13, color: 'var(--text-secondary)', background: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: 99, border: '1px solid var(--border)' }}>
+          <span className="topbar-currency">
             {getCurrencySymbol(user.currency)} {user.currency}
           </span>
         )}

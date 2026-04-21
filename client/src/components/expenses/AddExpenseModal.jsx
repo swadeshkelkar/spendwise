@@ -22,15 +22,43 @@ export default function AddExpenseModal({ onClose, onSuccess }) {
 
   const mutation = useMutation({
     mutationFn: (data) => api.post('/expenses', data),
-    onSuccess: () => {
+    onSuccess: async (_, sentData) => {
       toast.success('Expense added!');
       qc.invalidateQueries({ queryKey: ['expenses'] });
       qc.invalidateQueries({ queryKey: ['summary'] });
+      qc.invalidateQueries({ queryKey: ['budgets'] });
       onSuccess?.();
       onClose();
+
+      // ── Budget alert check ────────────────────────────────────────────────
+      try {
+        const budgets = await api.get('/expenses/budgets').then(r => r.data);
+        const b = budgets.find(b => String(b.category_id) === String(sentData.category_id));
+        if (b && b.amount > 0) {
+          const spent = b.spent || 0;
+          const pct   = (spent / b.amount) * 100;
+          const currency = user?.currency || '';
+          if (pct >= 100) {
+            toast.error(
+              `🚨 You've exceeded your ${b.category_name} budget!\n` +
+              `${currency} ${spent.toLocaleString()} spent of ${Number(b.amount).toLocaleString()} limit.`,
+              { duration: 6000 }
+            );
+          } else if (pct >= 80) {
+            toast(
+              `⚠️ ${b.category_name} budget at ${pct.toFixed(0)}%\n` +
+              `${currency} ${spent.toLocaleString()} of ${Number(b.amount).toLocaleString()} used.`,
+              { icon: '⚠️', duration: 5000, style: { background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.4)', color: '#FCD34D' } }
+            );
+          }
+        }
+      } catch {
+        // budget check is best-effort — never block the main flow
+      }
     },
     onError: (err) => toast.error(err.response?.data?.error || 'Failed to add expense'),
   });
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -35,7 +35,7 @@ export default function BudgetWidget({ currency }) {
 
       {alerts.length > 0 && (
         <div className="banner banner-warning" style={{ marginBottom: 12, fontSize: 13 }}>
-          ⚠️ {alerts.length} categor{alerts.length > 1 ? 'ies are' : 'y is'} near limit
+          ⚠️ {alerts.length} categor{alerts.length > 1 ? 'ies are' : 'y is'} near or over limit
         </div>
       )}
 

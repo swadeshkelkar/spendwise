@@ -14,8 +14,9 @@ export default function LoginPage() {
           <div className="sidebar-logo-icon" style={{ width: 44, height: 44, fontSize: 22, borderRadius: 10 }}>💰</div>
           <span style={{ fontSize: '1.3rem', fontWeight: 800 }}>SpendWise</span>
         </div>
-        <h2 className="auth-title">Welcome back</h2>
+        <h2 className="auth-title">Welcome</h2>
         <p className="auth-sub">Sign in to continue tracking your expenses</p>
+
 
         {error && (
           <div className="banner banner-danger" style={{ marginBottom: 20 }}>
@@ -34,11 +35,22 @@ export default function LoginPage() {
           Continue with Google
         </a>
 
-        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginTop: 24, lineHeight: 1.6 }}>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginTop: 8, marginBottom: 12, lineHeight: 1.6 }}>
           By signing in, you agree to our terms of service.<br />
           Your Google account info is only used to identify you.
         </p>
+
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginTop: 12, marginBottom: 8, lineHeight: 1.6 }}>
+          Not interested?
+        </p>
+
+        <a href="/" className="btn btn-secondary btn-full" id="go-home" style={{ justifyContent: 'center', gap: 12, padding: '14px 20px', fontSize: 15 }}>
+          Go to Home Page
+        </a>
+
       </div>
+
+
     </div>
   );
 }

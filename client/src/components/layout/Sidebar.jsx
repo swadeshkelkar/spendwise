@@ -7,9 +7,9 @@ const navItems = [
   { to: '/settings', icon: '⚙️', label: 'Settings' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar${isOpen ? ' open' : ''}`}>
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon">💰</div>
         <span>SpendWise</span>
@@ -22,6 +22,7 @@ export default function Sidebar() {
             key={item.to}
             to={item.to}
             className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+            onClick={onClose}
           >
             <span className="nav-item-icon">{item.icon}</span>
             <span className="nav-item-label">{item.label}</span>

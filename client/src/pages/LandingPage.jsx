@@ -5,7 +5,6 @@ const features = [
   { icon: '📊', title: 'Rich Analytics', desc: 'Pie charts, trends, and monthly breakdowns to understand your spending patterns.' },
   { icon: '🗂️', title: 'Smart Categories', desc: 'Travel, Food, Bills, Investments, and more. Create custom categories too.' },
   { icon: '📤', title: 'Export Anywhere', desc: 'Export your expenses as CSV or Excel with powerful filters applied.' },
-  { icon: '💱', title: 'Multi-Currency', desc: '20+ currencies supported. Default is INR. Switch anytime from settings.' },
   { icon: '🔔', title: 'Budget Alerts', desc: 'Set per-category budgets and get warned when you\'re close to the limit.' },
   { icon: '🔒', title: 'Secure & Private', desc: 'Google Sign-In only — your data stays yours, no passwords stored.' },
 ];
@@ -68,7 +67,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="landing-footer">
-        <span>© 2025 SpendWise · Built with ❤️</span>
+        <span>SpendWise · Built with Love</span>
       </footer>
     </div>
   );

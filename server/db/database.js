@@ -69,6 +69,19 @@ function initializeDB() {
       FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
       UNIQUE(user_id, category_id)
     );
+
+    CREATE TABLE IF NOT EXISTS expense_templates (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id     INTEGER NOT NULL,
+      name        TEXT NOT NULL,
+      description TEXT NOT NULL,
+      amount      REAL NOT NULL,
+      category_id INTEGER NOT NULL,
+      notes       TEXT,
+      created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (category_id) REFERENCES categories(id)
+    );
   `);
 
   console.log('✅ Database initialized at', DB_PATH);
